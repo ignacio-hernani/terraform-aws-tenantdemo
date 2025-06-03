@@ -31,7 +31,7 @@ locals {
 
 # IPAM Module
 module "ipam" {
-  source  = "app.terraform.io/test-khatib/ipam/aws"
+  source  = "app.terraform.io/hashicorp-ignacio-test/ipam/aws"
   version = "~> 0.0"
   
   environment     = var.environment
@@ -43,7 +43,7 @@ module "ipam" {
 
 # Resource Tagging Module
 module "resource_tags" {
-  source  = "app.terraform.io/test-khatib/resource-tags/aws"
+  source  = "app.terraform.io/hashicorp-ignacio-test/resource-tags/aws"
   version = "~> 0.0"
   
   environment  = var.environment
@@ -63,7 +63,7 @@ module "resource_tags" {
 
 # VPC Module
 module "vpc" {
-  source  = "app.terraform.io/test-khatib/vpc/aws"
+  source  = "app.terraform.io/hashicorp-ignacio-test/vpc/aws"
   version = "~> 0.0"
   
   environment        = var.environment
@@ -90,7 +90,7 @@ module "vpc" {
 
 # Transit Gateway Module
 module "transit_gateway" {
-  source  = "app.terraform.io/test-khatib/transit-gateway/aws"
+  source  = "app.terraform.io/hashicorp-ignacio-test/transit-gateway/aws"
   version = "~> 0.0"
   
   environment  = var.environment
@@ -111,7 +111,7 @@ module "transit_gateway" {
 
 # Security Groups Module
 module "security_groups" {
-  source  = "app.terraform.io/test-khatib/security-groups/aws"
+  source  = "app.terraform.io/hashicorp-ignacio-test/security-groups/aws"
   version = "~> 0.0"
   
   environment  = var.environment
@@ -147,7 +147,7 @@ module "security_groups" {
 
 # IAM Roles Module
 module "iam_roles" {
-  source  = "app.terraform.io/test-khatib/iam-roles/aws"
+  source  = "app.terraform.io/hashicorp-ignacio-test/iam-roles/aws"
   version = "~> 0.0"
   
   environment  = var.environment
