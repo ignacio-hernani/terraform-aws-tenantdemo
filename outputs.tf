@@ -79,3 +79,14 @@ output "aws_region" {
   description = "AWS region"
   value       = var.aws_region
 }
+
+# HCP Vault Secrets Outputs
+output "hvs_app_name" {
+  description = "Name of the HCP Vault Secrets app"
+  value       = resource.hcp_vault_secrets_app.hvs_app.app_name
+}
+
+output "hvs_secrets_available" {
+  description = "List of secrets available in HCP Vault Secrets"
+  value       = keys(local.all_secrets)
+}

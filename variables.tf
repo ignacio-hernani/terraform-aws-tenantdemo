@@ -38,3 +38,14 @@ variable "owner_email" {
   description = "Owner email for notifications"
   type        = string
 }
+
+# HCP and Waypoint Configuration Variables
+variable "waypoint_application" {
+  description = "Waypoint application name"
+  type        = string
+}
+
+variable "ddr_user_hcp_project_resource_id" {
+  description = "HCP project resource ID for the user"
+  type        = string
+}

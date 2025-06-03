@@ -2,7 +2,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 5.0"
+      version = "~> 5.99.0"
+    }
+    hcp = {
+      source  = "hashicorp/hcp"
+      version = "~> 0.104.0"
     }
   }
 }
@@ -19,7 +23,7 @@ data "aws_availability_zones" "available" {
 # Local values
 locals {
   azs = data.aws_availability_zones.available.names
-  
+
   common_tags = {
     Environment = var.environment
     Project     = var.project_name
@@ -33,11 +37,11 @@ locals {
 module "ipam" {
   source  = "app.terraform.io/hashicorp-ignacio-test/ipam/aws"
   version = "~> 1.0"
-  
-  environment     = var.environment
-  project_name    = var.project_name
-  ipam_pool_cidr  = var.ipam_pool_cidr
-  
+
+  environment    = var.environment
+  project_name   = var.project_name
+  ipam_pool_cidr = var.ipam_pool_cidr
+
   tags = local.common_tags
 }
 
@@ -45,15 +49,15 @@ module "ipam" {
 module "resource_tags" {
   source  = "app.terraform.io/hashicorp-ignacio-test/resource-tags/aws"
   version = "~> 1.0"
-  
+
   environment  = var.environment
   project_name = var.project_name
-  
+
   vlan_allocations = {
     subnet_1 = 100
     subnet_2 = 200
   }
-  
+
   asn_allocations = {
     tgw   = 64512
     vpc_1 = 65001
@@ -65,26 +69,26 @@ module "resource_tags" {
 module "vpc" {
   source  = "app.terraform.io/hashicorp-ignacio-test/vpc/aws"
   version = "~> 1.0"
-  
+
   environment        = var.environment
   project_name       = var.project_name
   availability_zones = slice(local.azs, 0, 2)
-  
+
   use_ipam           = true
   ipam_pool_id       = module.ipam.vpc_ipam_pool_id
   vpc_netmask_length = 20
-  
+
   subnet_types = ["private", "public"]
   vlan_tags    = ["100", "200"]
-  
+
   enable_dns_hostnames = true
   enable_dns_support   = true
-  
+
   enable_flow_logs      = false
   flow_log_traffic_type = "ALL"
-  
+
   tags = local.common_tags
-  
+
   depends_on = [module.ipam]
 }
 
@@ -92,20 +96,20 @@ module "vpc" {
 module "transit_gateway" {
   source  = "app.terraform.io/hashicorp-ignacio-test/transit-gateway/aws"
   version = "~> 1.0"
-  
+
   environment  = var.environment
   project_name = var.project_name
   vpc_id       = module.vpc.vpc_id
   subnet_ids   = module.vpc.subnet_ids
-  
+
   tgw_asn            = 64512
   enable_dns_support = true
   enable_multicast   = false
-  
+
   tgw_routes = []
-  
+
   tags = local.common_tags
-  
+
   depends_on = [module.vpc]
 }
 
@@ -113,12 +117,12 @@ module "transit_gateway" {
 module "security_groups" {
   source  = "app.terraform.io/hashicorp-ignacio-test/security-groups/aws"
   version = "~> 1.0"
-  
+
   environment  = var.environment
   project_name = var.project_name
   vpc_id       = module.vpc.vpc_id
   vpc_cidr     = module.vpc.vpc_cidr_block
-  
+
   base_ingress_rules = {
     ssh = {
       from_port   = 22
@@ -139,9 +143,9 @@ module "security_groups" {
       cidr_blocks = ["0.0.0.0/0"]
     }
   }
-  
+
   tags = local.common_tags
-  
+
   depends_on = [module.vpc]
 }
 
@@ -149,16 +153,16 @@ module "security_groups" {
 module "iam_roles" {
   source  = "app.terraform.io/hashicorp-ignacio-test/iam-roles/aws"
   version = "~> 1.0"
-  
+
   environment  = var.environment
   project_name = var.project_name
-  
+
   managed_policies = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
     "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
   ]
-  
+
   enable_ec2_operations = true
-  
+
   tags = local.common_tags
 }
