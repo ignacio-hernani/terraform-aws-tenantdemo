@@ -15,6 +15,11 @@ provider "aws" {
   region = var.aws_region
 }
 
+# HCP Provider Configuration
+provider "hcp" {
+  project_id = var.ddr_user_hcp_project_resource_id
+}
+
 # Data sources
 data "aws_availability_zones" "available" {
   state = "available"
