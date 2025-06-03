@@ -32,7 +32,7 @@ locals {
 # IPAM Module
 module "ipam" {
   source  = "app.terraform.io/hashicorp-ignacio-test/ipam/aws"
-  version = "~> 0.0"
+  version = "~> 1.0"
   
   environment     = var.environment
   project_name    = var.project_name
@@ -44,7 +44,7 @@ module "ipam" {
 # Resource Tagging Module
 module "resource_tags" {
   source  = "app.terraform.io/hashicorp-ignacio-test/resource-tags/aws"
-  version = "~> 0.0"
+  version = "~> 1.0"
   
   environment  = var.environment
   project_name = var.project_name
@@ -64,7 +64,7 @@ module "resource_tags" {
 # VPC Module
 module "vpc" {
   source  = "app.terraform.io/hashicorp-ignacio-test/vpc/aws"
-  version = "~> 0.0"
+  version = "~> 1.0"
   
   environment        = var.environment
   project_name       = var.project_name
@@ -91,7 +91,7 @@ module "vpc" {
 # Transit Gateway Module
 module "transit_gateway" {
   source  = "app.terraform.io/hashicorp-ignacio-test/transit-gateway/aws"
-  version = "~> 0.0"
+  version = "~> 1.0"
   
   environment  = var.environment
   project_name = var.project_name
@@ -112,7 +112,7 @@ module "transit_gateway" {
 # Security Groups Module
 module "security_groups" {
   source  = "app.terraform.io/hashicorp-ignacio-test/security-groups/aws"
-  version = "~> 0.0"
+  version = "~> 1.0"
   
   environment  = var.environment
   project_name = var.project_name
@@ -148,7 +148,7 @@ module "security_groups" {
 # IAM Roles Module
 module "iam_roles" {
   source  = "app.terraform.io/hashicorp-ignacio-test/iam-roles/aws"
-  version = "~> 0.0"
+  version = "~> 1.0"
   
   environment  = var.environment
   project_name = var.project_name
