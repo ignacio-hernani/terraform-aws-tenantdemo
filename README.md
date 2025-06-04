@@ -189,10 +189,32 @@ instance_types = {
 
 1. **AWS Account**: With appropriate permissions
 2. **HCP Account**: With Vault Secrets enabled
-3. **Terraform**: Version >= 1.5.0
-4. **Provider Versions**:
+3. **HCP Service Principal**: For automated authentication
+4. **Terraform**: Version >= 1.5.0
+5. **Provider Versions**:
    - AWS provider ~> 5.99.0
    - HCP provider ~> 0.104.0
+
+### 🔑 HCP Authentication Setup
+
+For **Waypoint/Terraform Cloud deployment**, create an HCP service principal:
+
+1. **Create Service Principal** in HCP Console:
+   - Go to **Access control (IAM)** → **Service principals**
+   - Create with `secrets:app-secrets:admin` permission
+   - Note the **Client ID** and **Client Secret**
+
+2. **Configure Environment Variables** in Waypoint:
+   ```bash
+   HCP_CLIENT_ID="your-service-principal-client-id"
+   HCP_CLIENT_SECRET="your-service-principal-client-secret"
+   ```
+
+3. **Alternative**: Use explicit variables:
+   ```hcl
+   hcp_client_id     = "your-client-id"
+   hcp_client_secret = "your-client-secret"  # Mark as sensitive
+   ```
 
 ## 🔧 Module Dependencies
 
