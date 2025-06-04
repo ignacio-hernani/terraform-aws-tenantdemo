@@ -68,7 +68,7 @@ This solution is designed for **HCP Waypoint** deployment:
 - **Security**: All sensitive data managed via HCP Vault Secrets
 - **Consistency**: Standardized networking across environments
 
-## 📋 Prerequisites
+## Prerequisites
 
 1. **AWS Account**: With appropriate permissions
 2. **HCP Account**: With Vault Secrets enabled
