@@ -2,15 +2,14 @@
 
 This Terraform module creates a comprehensive networking infrastructure on AWS that includes IPAM, VPC, Security Groups, Transit Gateway, IAM Roles, and Resource Tags. It's designed to work with HashiCorp HCP Waypoint and uses HCP Vault Secrets to share networking details with compute workloads.
 
-## 🏗️ Complete Solution
+## Complete Solution
 
 This repository contains:
 
 1. **Networking Infrastructure Module** (root directory): Creates the base AWS networking infrastructure
-2. **VM Add-On Module** (`/vm-addon`): Consumes networking details to create EC2 instances
 3. **HCP Vault Secrets Integration**: Seamlessly connects networking and compute modules
 
-## 🔧 Architecture Components
+## Architecture Components
 
 ### Networking Infrastructure
 - **IPAM (IP Address Management)**: Manages IP address allocation across the infrastructure
@@ -20,13 +19,7 @@ This repository contains:
 - **IAM Roles**: Creates necessary IAM roles for EC2 instances
 - **Resource Tags**: Provides consistent tagging strategy
 
-### VM Add-On
-- **EC2 Instances**: Creates configurable EC2 instances in the network infrastructure
-- **SSH Key Management**: Generates and manages SSH key pairs
-- **Automatic Configuration**: Uses networking details from HCP Vault Secrets
-- **Security Integration**: Inherits security groups and IAM roles from networking module
-
-## 🔐 HCP Vault Secrets Integration
+## HCP Vault Secrets Integration
 
 This solution uses HCP Vault Secrets to create a seamless connection between networking infrastructure and compute workloads. The networking module automatically stores infrastructure details as secrets, which the VM add-on consumes.
 
@@ -53,66 +46,7 @@ This solution uses HCP Vault Secrets to create a seamless connection between net
 - `aws_region`: AWS region
 - `common_tags`: JSON-encoded common tags for resources
 
-## 🚀 Quick Start
-
-### 1. Deploy Networking Infrastructure
-
-```hcl
-module "networking" {
-  source = "./terraform-aws-tenantdemo"
-  
-  # HCP Configuration
-  waypoint_application = "my-app"
-  ddr_user_hcp_project_resource_id = "your-hcp-project-id"
-  owner_email = "admin@company.com"
-  
-  # Infrastructure Configuration
-  environment = "dev"
-  project_name = "demo-project"
-  aws_region = "us-west-2"
-}
-```
-
-### 2. Deploy VM Add-On
-
-```hcl
-module "vm_addon" {
-  source = "./terraform-aws-tenantdemo/vm-addon"
-  
-  # HCP Configuration (MUST match networking module)
-  waypoint_application = "my-app"
-  ddr_user_hcp_project_resource_id = "your-hcp-project-id"
-  
-  # VM Configuration
-  instance_types = {
-    flavor1 = "t3.micro"
-    flavor2 = "t3.small"
-  }
-}
-```
-
-### 3. Complete Example
-
-See `example-usage.tf` for a complete working example that deploys both modules together.
-
-## 📁 Repository Structure
-
-```
-terraform-aws-tenantdemo/
-├── main.tf                    # Networking infrastructure
-├── hvs.tf                     # HCP Vault Secrets integration
-├── variables.tf               # Networking variables
-├── outputs.tf                 # Networking outputs
-├── README.md                  # This file
-├── example-usage.tf           # Complete usage example
-└── vm-addon/                  # VM Add-On Module
-    ├── main.tf                # VM infrastructure
-    ├── variables.tf           # VM variables
-    ├── outputs.tf             # VM outputs
-    └── README.md              # VM add-on documentation
-```
-
-## 🎯 HCP Waypoint Integration
+## HCP Waypoint Integration
 
 This solution is designed for **HCP Waypoint** deployment:
 
@@ -134,57 +68,6 @@ This solution is designed for **HCP Waypoint** deployment:
 - **Security**: All sensitive data managed via HCP Vault Secrets
 - **Consistency**: Standardized networking across environments
 
-## 🔑 Required Variables
-
-### For Networking Module
-```hcl
-# Required
-waypoint_application = "your-waypoint-app-name"
-ddr_user_hcp_project_resource_id = "your-hcp-project-id"
-owner_email = "your-email@company.com"
-
-# Optional with defaults
-environment = "dev"
-project_name = "demo-project"
-aws_region = "us-east-1"
-```
-
-### For VM Add-On
-```hcl
-# Required (must match networking module)
-waypoint_application = "your-waypoint-app-name"
-ddr_user_hcp_project_resource_id = "your-hcp-project-id"
-
-# Optional with defaults
-instance_types = {
-  flavor1 = "t3.micro"
-  flavor2 = "t3.small"
-}
-```
-
-## 📊 Outputs
-
-### Networking Module
-- `vpc_id`: VPC ID
-- `private_subnet_ids`: Private subnet IDs  
-- `public_subnet_ids`: Public subnet IDs
-- `hvs_app_name`: HCP Vault Secrets app name
-- `hvs_secrets_available`: List of available secrets
-
-### VM Add-On
-- `instance_ids`: EC2 instance IDs
-- `instance_private_ips`: Private IP addresses
-- `ssh_connection_helper`: SSH connection guidance
-- `infrastructure_details`: Retrieved infrastructure info
-
-## 🔒 Security Features
-
-- **HCP Vault Secrets**: All infrastructure details stored securely
-- **IAM Integration**: Least privilege access patterns
-- **Network Isolation**: Private/public subnet separation
-- **Security Groups**: Pre-configured application access rules
-- **SSH Key Management**: Automated key generation and management
-
 ## 📋 Prerequisites
 
 1. **AWS Account**: With appropriate permissions
@@ -195,7 +78,7 @@ instance_types = {
    - AWS provider ~> 5.99.0
    - HCP provider ~> 0.104.0
 
-### 🔑 HCP Authentication Setup
+### HCP Authentication Setup
 
 For **Waypoint/Terraform Cloud deployment**, create an HCP service principal:
 
@@ -216,7 +99,7 @@ For **Waypoint/Terraform Cloud deployment**, create an HCP service principal:
    hcp_client_secret = "your-client-secret"  # Mark as sensitive
    ```
 
-## 🔧 Module Dependencies
+## Module Dependencies
 
 ### External Modules Used
 - `app.terraform.io/hashicorp-ignacio-test/ipam/aws`
@@ -227,7 +110,7 @@ For **Waypoint/Terraform Cloud deployment**, create an HCP service principal:
 - `app.terraform.io/hashicorp-ignacio-test/iam-roles/aws`
 - `app.terraform.io/hashicorp-ignacio-test/ec2-instances/aws`
 
-## 🔍 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -249,10 +132,4 @@ terraform output -module=vm_addon infrastructure_details
 hcp vault-secrets secrets list --app=<app-name>
 ```
 
-## 🤝 Contributing
-
-This is a demo repository for HashiCorp HCP Waypoint integration. For issues or improvements, please contact the HashiCorp demo engineering team.
-
 ---
-
-**🎉 Ready for your HCP Waypoint demo!** This solution provides a complete networking foundation with seamless VM integration via HCP Vault Secrets. 
