@@ -87,7 +87,7 @@ For **Waypoint/Terraform Cloud deployment**, create an HCP service principal:
    - Create with `secrets:app-secrets:admin` permission
    - Note the **Client ID** and **Client Secret**
 
-2. **Configure Environment Variables** in Waypoint:
+2. **Configure Environment Variables** in Terraform:
    ```bash
    HCP_CLIENT_ID="your-service-principal-client-id"
    HCP_CLIENT_SECRET="your-service-principal-client-secret"
