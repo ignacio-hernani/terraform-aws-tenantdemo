@@ -18,12 +18,14 @@ provider "aws" {
 # HCP Provider Configuration
 provider "hcp" {
   project_id    = var.ddr_user_hcp_project_resource_id
-  client_id     = var.hcp_client_id     # Falls back to HCP_CLIENT_ID env var if null
-  client_secret = var.hcp_client_secret # Falls back to HCP_CLIENT_SECRET env var if null
   
   # For automated environments (Waypoint/TFC), these should be set as environment variables:
   # HCP_CLIENT_ID     = "your-service-principal-client-id"
   # HCP_CLIENT_SECRET = "your-service-principal-client-secret"
+  
+  # Old way:
+  #client_id     = var.hcp_client_id     # Falls back to HCP_CLIENT_ID env var if null
+  #client_secret = var.hcp_client_secret # Falls back to HCP_CLIENT_SECRET env var if null
 }
 
 # Data sources
