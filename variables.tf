@@ -54,13 +54,11 @@ variable "ddr_user_hcp_project_resource_id" {
 variable "hcp_client_id" {
   description = "HCP service principal client ID (optional if using env vars)"
   type        = string
-#  default     = null
   sensitive   = false
 }
 
 variable "hcp_client_secret" {
   description = "HCP service principal client secret (optional if using env vars)"
   type        = string
-#  default     = null
   sensitive   = true
 }
