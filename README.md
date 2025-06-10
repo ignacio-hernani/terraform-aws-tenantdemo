@@ -89,14 +89,9 @@ For **Waypoint/Terraform Cloud deployment**, create an HCP service principal:
 
 2. **Configure Environment Variables** in Terraform:
    ```bash
+   HCP_PROJECT_ID="your-hcp-project-id"
    HCP_CLIENT_ID="your-service-principal-client-id"
    HCP_CLIENT_SECRET="your-service-principal-client-secret"
-   ```
-
-3. **Alternative**: Use explicit variables:
-   ```hcl
-   hcp_client_id     = "your-client-id"
-   hcp_client_secret = "your-client-secret"  # Mark as sensitive
    ```
 
 ## Module Dependencies

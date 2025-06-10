@@ -45,10 +45,10 @@ variable "waypoint_application" {
   type        = string
 }
 
-variable "ddr_user_hcp_project_resource_id" {
-  description = "HCP project resource ID for the user"
-  type        = string
-}
+# variable "hcp_project_resource_id" {
+#   description = "HCP project resource ID for the user"
+#   type        = string
+# }
 
 # Optional HCP Authentication (if not using environment variables)
 # variable "hcp_client_id" {

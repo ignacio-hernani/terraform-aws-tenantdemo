@@ -2,7 +2,7 @@
 resource "hcp_vault_secrets_app" "hvs_app" {
   app_name    = var.waypoint_application
   description = "HCP Vault Secrets for Waypoint application ${var.waypoint_application}"
-  project_id  = var.ddr_user_hcp_project_resource_id
+  # project_id  = var.hcp_project_resource_id
 }
 
 locals {
@@ -45,5 +45,5 @@ resource "hcp_vault_secrets_secret" "this" {
   app_name     = hcp_vault_secrets_app.hvs_app.app_name
   secret_name  = each.key
   secret_value = each.value
-  project_id   = var.ddr_user_hcp_project_resource_id
+  # project_id   = var.hcp_project_resource_id
 }
